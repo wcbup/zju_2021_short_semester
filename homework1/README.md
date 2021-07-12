@@ -2,8 +2,6 @@
 
 项目在MyApplication3里
 
-apk在MyApplication3\app\build\outputs\apk\debug里
-
 log的tag是MyActivity，用的级别都是verbose
 
 switch能切换图片
