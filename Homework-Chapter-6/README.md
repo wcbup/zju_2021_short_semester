@@ -10,7 +10,3 @@
 
 
 
-![image-20210719222949251](Homework-Chapter-6/Screenshot_20210719-222841.jpg)
-
-![image-20210719222949251](Homework-Chapter-6/Screenshot_20210719-222848.jpg)
-
