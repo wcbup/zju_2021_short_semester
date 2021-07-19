@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+<!--    <ImageView-->
+<!--        android:id="@+id/priority_color"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:src="@color/teal_200"-->
+<!--        />-->
+
+
+    <CheckBox
+        android:id="@+id/checkbox_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:id="@+id/text_todo"
+        android:text="test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkbox_item"
+        android:layout_toLeftOf="@+id/image_btn_delete"
+        android:layout_alignParentTop="true"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/text_time"
+        android:text="test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_todo"
+        android:layout_toRightOf="@+id/checkbox_item"
+        android:background="@color/white"
+        />
+
+    <ImageButton
+        android:id="@+id/image_btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        />
+
+</RelativeLayout>
