@@ -261,4 +261,16 @@
     </RelativeLayout>
 
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/material_wave_loading"
+        />
+
+
 </RelativeLayout>

@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.tictok.Camera.CameraActivity;
@@ -74,6 +75,7 @@ public class UploadActivity extends AppCompatActivity {
         EditText editUpload = findViewById(R.id.edit_upload);
         Button btn_change_cover = findViewById(R.id.btn_change_cover);
         Button btn_change_video = findViewById(R.id.btn_change_video);
+        LottieAnimationView lottie_loading = findViewById(R.id.lottie_loading);
 
         //init the path of video and cover image
         initPath();
@@ -91,6 +93,11 @@ public class UploadActivity extends AppCompatActivity {
                 @Override
             public void onClick(View v) {
                 Log.d(TAG, "start upload");
+                Toast.makeText(UploadActivity.this,"开始上传，请耐心等待",Toast.LENGTH_SHORT).show();
+                submit.setEnabled(false);//avoid submit repeatably
+                lottie_loading.setVisibility(View.VISIBLE);
+                lottie_loading.playAnimation();
+
                 String uploadString = editUpload.getText().toString();
                 uploadVideo(uploadString);
             }
@@ -158,8 +165,10 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void initPath(){
-        videoPath = CameraActivity.mp4Path;
-        coverPath = getCacheDir() + File.separator + "cover.png";
+        if(CameraActivity.isRecorded){
+            videoPath = CameraActivity.mp4Path;
+            coverPath = getCacheDir() + File.separator + "cover.png";
+        }
     }
 
     private void updateCoverPreview(){
@@ -185,6 +194,7 @@ public class UploadActivity extends AppCompatActivity {
     //convert bitmap into a png file to default path
     private void convertCoverBitmap(Bitmap bitmap){
         File file = new File(getCacheDir(), "cover.png");
+        coverPath = file.getPath();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
         byte[] bitmapData = bos.toByteArray();

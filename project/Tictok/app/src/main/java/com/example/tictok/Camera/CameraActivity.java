@@ -39,7 +39,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private MediaRecorder mediaRecorder;
     private SurfaceHolder surfaceHolder;
 
-    public static String mp4Path = "";
+    public static String mp4Path = null;
+    public static boolean isRecorded = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     mediaRecorder = null;
                     camera.lock();
                     isRecording = false;
+                    isRecorded = true;
                 }
             }
         });
