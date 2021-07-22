@@ -33,6 +33,7 @@ import com.example.tictok.MainActivity;
 import com.example.tictok.R;
 import com.example.tictok.network.IApi;
 import com.example.tictok.network.UploadResponse;
+import com.iceteck.silicompressorr.SiliCompressor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -100,7 +101,12 @@ public class UploadActivity extends AppCompatActivity {
                 lottie_loading.setVisibility(View.VISIBLE);
                 lottie_loading.playAnimation();
 
+
+
+//                compressVideo();
+
                 String uploadString = editUpload.getText().toString();
+//                uploadCompressedVideo(uploadString);
                 uploadVideo(uploadString);
             }
         });
@@ -273,6 +279,7 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UploadResponse> call, Throwable t) {
                 Log.e(TAG, "onFailure: "+t.toString() );
+                finish();
             }
         });
     }
@@ -342,5 +349,55 @@ public class UploadActivity extends AppCompatActivity {
             videoPath = path;
             updateCoverPreview();
         }
+    }
+
+    private void compressVideo(){
+                String compressedVideoPath = null;
+                File dir = new File(getCacheDir().toString());
+                if(!dir.exists()){
+                    dir.mkdir();
+                }
+                try{
+                    compressedVideoPath
+                            = SiliCompressor.with(UploadActivity.this)
+                            .compressVideo(videoPath, getCacheDir().toString());
+                }catch (Exception e){
+                    Log.e(TAG, "compressVideo: "+e.toString());
+                }
+                videoPath = compressedVideoPath;
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.d(TAG, "start compress");
+//                String compressedVideoPath = null;
+//                File dir = new File(getCacheDir().toString());
+//                if(!dir.exists()){
+//                    dir.mkdir();
+//                }
+//
+//                try{
+//                    compressedVideoPath
+//                            = SiliCompressor.with(UploadActivity.this)
+//                            .compressVideo(videoPath, getCacheDir().toString());
+//                }catch (Exception e){
+//                    Log.e(TAG, "compressVideo: "+e.toString());
+//                }
+//                File beforeCompressed = new File(videoPath);
+//                File afterCompressed = new File(compressedVideoPath);
+//                Log.d(TAG, "before compressed "+beforeCompressed.length());
+//                Log.d(TAG, "after compressed "+afterCompressed.length());
+//            }
+//        }).start();
+    }
+
+    private void uploadCompressedVideo(String uploadString){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                compressVideo();
+                uploadVideo(uploadString);
+            }
+        }).start();
     }
 }
