@@ -20,6 +20,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tictok.R;
 import com.example.tictok.Upload.UploadActivity;
@@ -66,6 +67,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 if(!isRecording){
                     if(prepareVideoRecorder()){
                         shot_hint.setText("停止");
+                        btn_shot.setImageResource(R.drawable.shot);
                         mediaRecorder.start();
                         isRecording = true;
                     }
@@ -74,6 +76,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     mediaRecorder.setOnInfoListener(null);
                     mediaRecorder.setPreviewDisplay(null);
                     shot_hint.setText("拍摄");
+                    btn_shot.setImageResource(R.drawable.record2);
                     try {
                         mediaRecorder.stop();
                     }catch (Exception e){
@@ -86,6 +89,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     camera.lock();
                     isRecording = false;
                     isRecorded = true;
+                    Toast.makeText(CameraActivity.this,
+                            "拍摄成功",
+                    Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -96,6 +102,21 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(camera == null){
+            initCamera();
+        }
+        camera.startPreview();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        camera.stopPreview();
     }
 
     private void initMp4Path(){

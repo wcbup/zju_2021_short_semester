@@ -106,8 +106,8 @@ public class UploadActivity extends AppCompatActivity {
 //                compressVideo();
 
                 String uploadString = editUpload.getText().toString();
-//                uploadCompressedVideo(uploadString);
-                uploadVideo(uploadString);
+                uploadCompressedVideo(uploadString);
+//                uploadVideo(uploadString);
             }
         });
 
@@ -279,6 +279,9 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UploadResponse> call, Throwable t) {
                 Log.e(TAG, "onFailure: "+t.toString() );
+                Toast.makeText(UploadActivity.this,
+                        "网络出现问题",
+                        Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

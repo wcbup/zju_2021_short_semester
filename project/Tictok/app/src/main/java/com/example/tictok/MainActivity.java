@@ -1,5 +1,6 @@
 package com.example.tictok;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -22,6 +23,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int CAMERA_REQUEST = 1654;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Button stream = findViewById(R.id.stream);
         Button upload = findViewById(R.id.upload);
 
-        requestPermission();
+//        requestPermission();
 
         broad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +48,18 @@ public class MainActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                startActivity(intent);
+                boolean cameraPermission = ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+                boolean audioPermission = ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+                if(cameraPermission&&audioPermission){
+                    Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                    startActivity(intent);
+                }else {
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.RECORD_AUDIO},CAMERA_REQUEST);
+                }
             }
         });
         stream.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +86,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == CAMERA_REQUEST){
+            if(grantResults.length>0 && grantResults[0]
+            == PackageManager.PERMISSION_GRANTED){
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                startActivity(intent);
+            }
+        }
     }
 
     private void requestPermission(){

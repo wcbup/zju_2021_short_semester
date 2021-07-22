@@ -169,7 +169,7 @@
                         android:layout_width="77dp"
                         android:layout_height="77dp"
                         android:layout_alignParentTop="true"
-                        android:src="@drawable/shot"
+                        android:src="@drawable/record2"
                         android:background="@color/transparent"/>
                     <TextView
                         android:id="@+id/text_shot_hint"
