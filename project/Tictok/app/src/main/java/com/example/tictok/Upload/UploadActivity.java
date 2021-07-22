@@ -76,6 +76,7 @@ public class UploadActivity extends AppCompatActivity {
         Button btn_change_cover = findViewById(R.id.btn_change_cover);
         Button btn_change_video = findViewById(R.id.btn_change_video);
         LottieAnimationView lottie_loading = findViewById(R.id.lottie_loading);
+        ImageView imageBackgroundCover = findViewById(R.id.background_cover);
 
         //init the path of video and cover image
         initPath();
@@ -94,6 +95,7 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "start upload");
                 Toast.makeText(UploadActivity.this,"开始上传，请耐心等待",Toast.LENGTH_SHORT).show();
+                imageBackgroundCover.setVisibility(View.VISIBLE);
                 submit.setEnabled(false);//avoid submit repeatably
                 lottie_loading.setVisibility(View.VISIBLE);
                 lottie_loading.playAnimation();
